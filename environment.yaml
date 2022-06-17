@@ -1,0 +1,14 @@
+name: lidr
+channels:
+  - conda-forge
+  - r
+  - default
+dependencies:
+  - r
+  - r-geometry  # Hidden dependency
+  - r-lidr
+  - r-modeest
+  - r-moments
+  - r-raster
+  - r-rgdal  # Hidden dependency
+  - r-spatialeco
