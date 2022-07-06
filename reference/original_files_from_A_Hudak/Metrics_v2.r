@@ -1,11 +1,15 @@
-# Modified from:
-#
 # Script Name:  Metrics_v2.r
 # Description:  Metrics functions to call with lidR
 # Author:       Ben Bright
 # Date:         Nov 2021, updated June 2022
 # Note:			Added some metrics based on input from Terry Barrett at UVM and Bob McGaughey (21 June 2022 email from Andy)
 
+
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
 # ------- TopoMetrics based on digital elevation model
 TopoMetrics = function(dem_in, res, align, outdir) {
 
@@ -18,7 +22,7 @@ TopoMetrics = function(dem_in, res, align, outdir) {
 	e = extent(XMIN, xmax(dem), ymin(dem), YMAX)
 	dem = extend(dem, e)
 	dem = aggregate(dem, res) # Aggregate 1-m DEM to resolution
-
+	
 	# --- Get latitude
 	latMin = ymin(extent(projectExtent(dem, "+proj=longlat")))
 	latMax = ymax(extent(projectExtent(dem, "+proj=longlat")))
@@ -42,7 +46,7 @@ TopoMetrics = function(dem_in, res, align, outdir) {
 	curv.planform = curvature(dem, type="planform")
 	curv.profile = curvature(dem, type="profile")
 	curv.total = curvature(dem, type="total")
-	writeRaster(curv.planform*100, paste0(outdir, "TOPO_plancurv.tif"))	# FUSION mutiplies curvature by 100,
+	writeRaster(curv.planform*100, paste0(outdir, "TOPO_plancurv.tif"))	# FUSION mutiplies curvature by 100, 
 	writeRaster(curv.profile*100, paste0(outdir, "TOPO_profilecurv.tif"))	# but still big diffs between this and FUSION
 	writeRaster(curv.total*100, paste0(outdir, "TOPO_curvature.tif"))
 
@@ -53,8 +57,19 @@ TopoMetrics = function(dem_in, res, align, outdir) {
 
 }
 
+
 TopoMetricNames = c("TOPO_aspect","TOPO_curvature","TOPO_elevation","TOPO_plancurv","TOPO_profilecurv","TOPO_slope","TOPO_sri")
 
+
+
+
+
+
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
 # ------- Metrics (>2 m aboveground)
 Metrics = function(z, i, r) {
 
@@ -98,7 +113,6 @@ Metrics = function(z, i, r) {
 	ALL_RETURNS_int_kurtosis_2plus = kurtosis(i[twoPlus]),
 	ALL_RETURNS_int_max_2plus = as.numeric(max(i[twoPlus])),
 	ALL_RETURNS_int_min_2plus = as.numeric(min(i[twoPlus])),
-	ALL_RETURNS_int_mode_2plus = as.numeric(mfv(i[twoPlus])[1]), # Added by TCB July 2022
 	ALL_RETURNS_int_P01_2plus = quantile(i[twoPlus], 0.01),
 	ALL_RETURNS_int_P05_2plus = quantile(i[twoPlus], 0.05),
 	ALL_RETURNS_int_P10_2plus = quantile(i[twoPlus], 0.10), # ADDED JUNE 2022
@@ -183,6 +197,7 @@ Metrics = function(z, i, r) {
    return(metrics)
 }
 
+
 MetricNames = c(
 	"ALL_RETURNS_cnt", # ADDED JUNE 2022
 	"ALL_RETURNS_all_cnt_2plus",
@@ -220,7 +235,6 @@ MetricNames = c(
 	"ALL_RETURNS_int_kurtosis_2plus",
 	"ALL_RETURNS_int_max_2plus",
 	"ALL_RETURNS_int_min_2plus",
-	"ALL_RETURNS_int_mode_2plus", # Added by TCB July 2022
 	"ALL_RETURNS_int_P01_2plus",
 	"ALL_RETURNS_int_P05_2plus",
 	"ALL_RETURNS_int_P10_2plus", # ADDED JUNE 2022
@@ -302,9 +316,26 @@ MetricNames = c(
 	"PctAllRtns_above_mode" # ADDED JUNE 2022
 	)
 
+
+
+
+
+
+
+
+
+
+
+
+
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
 # ------- Strata metrics
 StrataMetrics = function(z, r) {
-
+	
 	gt0 = which(z > 0)
 	s0 = which(z > 0 & z < 0.5)
 	s1 = which(z > 0.5 & z < 1)
@@ -316,7 +347,7 @@ StrataMetrics = function(z, r) {
 	s7 = which(z > 32 & z < 48)
 	s8 = which(z > 48 & z < 64)
 	s9 = which(z > 64)
-
+	
 	gt0first = which(z > 0 & r == 1)
 	s0first = which(z > 0 & z < 0.5 & r == 1)
 	s1first = which(z > 0.5 & z < 1 & r == 1)
@@ -449,11 +480,12 @@ StrataMetrics = function(z, r) {
 	FIRST_RETURNS_strata_8to16M_return_proportion = length(z[s5first]) / length(z[gt0first]),
 	FIRST_RETURNS_strata_8to16M_skewness = skewness(z[s5first]),
 	FIRST_RETURNS_strata_8to16M_stddev = sd(z[s5first]),
-	FIRST_RETURNS_strata_8to16M_total_return_cnt = length(z[s5first])
+	FIRST_RETURNS_strata_8to16M_total_return_cnt = length(z[s5first])	
 	)
 
    return(metrics)
 }
+
 
 StrataMetricNames = c(
 	"ALL_RETURNS_strata_0p5to1M_CV",
@@ -534,7 +566,7 @@ StrataMetricNames = c(
 	"FIRST_RETURNS_strata_16to32M_skewness",
 	"FIRST_RETURNS_strata_16to32M_stddev",
 	"FIRST_RETURNS_strata_16to32M_total_return_cnt",
-	"FIRST_RETURNS_strata_1to2M_CV",
+	"FIRST_RETURNS_strata_1to2M_CV", 
 	"FIRST_RETURNS_strata_1to2M_kurtosis",
 	"FIRST_RETURNS_strata_1to2M_return_proportion",
 	"FIRST_RETURNS_strata_1to2M_skewness",
@@ -575,9 +607,29 @@ StrataMetricNames = c(
 	"FIRST_RETURNS_strata_8to16M_return_proportion",
 	"FIRST_RETURNS_strata_8to16M_skewness",
 	"FIRST_RETURNS_strata_8to16M_stddev",
-	"FIRST_RETURNS_strata_8to16M_total_return_cnt"
+	"FIRST_RETURNS_strata_8to16M_total_return_cnt" 
 	)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
+# -----------------------------------
 # ------- Canopy height model-based metrics
 # Adapted from https://jean-romain.github.io/lidRbook/outbox.html#outbox-custom-metrics
 
@@ -631,4 +683,19 @@ CHMmetrics <- function(chunk, res, start, M) {
   return(metric)
 }
 
+
 CHMMetricNames = c("canopy_average_height","canopy_FPV","canopy_maximum_height","canopy_rumple","canopy_stddev_height")
+
+
+
+
+
+
+
+
+
+
+
+
+
+

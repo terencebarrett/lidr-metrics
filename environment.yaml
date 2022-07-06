@@ -12,3 +12,4 @@ dependencies:
   - r-raster
   - r-rgdal  # Hidden dependency
   - r-spatialeco
+  - r-terra
