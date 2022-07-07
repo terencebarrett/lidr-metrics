@@ -177,7 +177,10 @@ Metrics = function(z, i, r) {
 	Pct1stRtns_above_mode = length(z[which(r == 1 & z > as.numeric(mfv(z[first])[1]))]) / length(z[which(r == 1)]) * 100, # ADDED JUNE 2022
 	PctAllRtns_above_2 = length(z[twoPlus]) / length(z) * 100,
 	PctAllRtns_above_mean = length(z[which(z > mean(z[twoPlus]))]) / length(z) * 100,
-	PctAllRtns_above_mode = length(z[which(z > as.numeric(mfv(z[twoPlus])[1]))]) / length(z) * 100 # ADDED JUNE 2022
+	PctAllRtns_above_mode = length(z[which(z > as.numeric(mfv(z[twoPlus])[1]))]) / length(z) * 100, # ADDED JUNE 2022
+	AllRtns_above_2_dividedby_Tot1stRtns_times100 = length(z[twoPlus]) / length(z[which(r == 1)]) * 100,  # Added by TCB July 2022
+	AllRtns_above_mean_dividedby_Tot1stRtns_times100 = length(z[which(z > mean(z[twoPlus]))]) / length(z[which(r == 1)]) * 100,  # Added by TCB July 2022
+	AllRtns_above_mode_dividedby_Tot1stRtns_times100 = length(z[which(z > as.numeric(mfv(z[twoPlus])[1]))]) / length(z[which(r == 1)]) * 100  # Added by TCB July 2022
 	)
 
    return(metrics)
@@ -299,7 +302,10 @@ MetricNames = c(
 	"Pct1stRtns_above_mode", # ADDED JUNE 2022
 	"PctAllRtns_above_2",
 	"PctAllRtns_above_mean",
-	"PctAllRtns_above_mode" # ADDED JUNE 2022
+	"PctAllRtns_above_mode", # ADDED JUNE 2022
+	"AllRtns_above_2_dividedby_Tot1stRtns_times100", # Added by TCB July 2022
+    "AllRtns_above_mean_dividedby_Tot1stRtns_times100", # Added by TCB July 2022
+    "AllRtns_above_mode_dividedby_Tot1stRtns_times100" # Added by TCB July 2022
 	)
 
 # ------- Strata metrics
