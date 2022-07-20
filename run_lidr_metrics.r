@@ -36,13 +36,13 @@ print(ctg_norm)
 print('Generating Metrics')
 m <- grid_metrics(ctg_norm, ~Metrics(Z, Intensity, ReturnNumber), res=cell_res, start=align)
 names(m) = MetricNames
-terra::writeRaster(rast(m), paste0(outdir,"Metrics.tif"))
+terra::writeRaster(rast(m), paste0(outdir,"Metrics.tif"), gdal=c("INTERLEAVE=BAND"))
 
 # StrataMetrics
 print('Generating StrataMetrics')
 sm <- grid_metrics(ctg_norm, ~StrataMetrics(Z, ReturnNumber), res=cell_res, start=align)
 names(sm) = StrataMetricNames
-terra::writeRaster(rast(sm), paste0(outdir,"StrataMetrics.tif"))
+terra::writeRaster(rast(sm), paste0(outdir,"StrataMetrics.tif"), gdal=c("INTERLEAVE=BAND"))
 
 # - Canopy metrics
 print('Generating canopy metrics')
