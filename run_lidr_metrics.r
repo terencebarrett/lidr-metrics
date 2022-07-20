@@ -10,9 +10,8 @@ library(terra)
 
 # TODO: Parallel process this script -- OR -- just run one file and use Python multiprocess on algorithm
 # TODO: Name output acc. to input
-# TODO: Change from TIF to CSV output
 # TODO: Make Parameters into CLI args
-
+# TODO: Change from default LZW compression? GDAL options: https://gdal.org/drivers/raster/gtiff.html
 
 # Parameters #
 
