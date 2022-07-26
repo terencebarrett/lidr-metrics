@@ -4,12 +4,12 @@ channels:
   - r
   - default
 dependencies:
-  - r
-  - r-geometry  # Hidden dependency
-  - r-lidr
-  - r-modeest
-  - r-moments
-  - r-raster
-  - r-rgdal  # Hidden dependency
-  - r-spatialeco
-  - r-terra
+  - r=4
+  - r-geometry=0.4  # Hidden dependency
+  - r-lidr=4.0
+  - r-modeest=2.4
+  - r-moments=0.14
+  - r-raster=3.5_21
+  - r-rgdal=1.5_29  # Hidden dependency
+  - r-spatialeco=1.3_7
+  - r-terra=1.5_21
